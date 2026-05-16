@@ -1,0 +1,59 @@
+=== Saarthi AI Edge Engine Verification Report ===
+Timestamp: 2026-05-20 14:57:43
+
+GET / -> 200 | {'status': 'Saarthi AI Edge Engine V2 is running', 'mode': 'STRESS_AWARE_OFFLINE'}
+
+POST /process (Low Stress) -> 200
+Response: {
+  "current_state": "ASSESS_SAFETY",
+  "instruction": "IS THE ENVIRONMENT SAFE? Look for fire, traffic, or hazards. Tap 'YES' to confirm safety.",
+  "ui_mode": "YELLOW",
+  "is_emergency": true,
+  "needs_confirmation": true,
+  "overload_analysis": {
+    "total_score": 0.41,
+    "ml_probability": 0.46,
+    "level": "MEDIUM",
+    "features_used": [
+      0.4,
+      0.3,
+      0.3,
+      0.5
+    ]
+  }
+}
+
+POST /process (High Stress) -> 200
+Response: {
+  "current_state": "ASSESS_SAFETY",
+  "instruction": "IS THE ENVIRONMENT SAFE? Look for fire, traffic, or hazards. Tap 'YES' to confirm safety.",
+  "ui_mode": "RED",
+  "is_emergency": true,
+  "needs_confirmation": true,
+  "overload_analysis": {
+    "total_score": 0.64,
+    "ml_probability": 0.57,
+    "level": "HIGH",
+    "features_used": [
+      0.9,
+      0.8,
+      0.3,
+      0.5
+    ]
+  }
+}
+
+POST /confirm-step -> 200
+Response: {
+  "status": "step_confirmed",
+  "new_state": "CHECK_RESPONSIVENESS"
+}
+
+GET /status -> 200
+Response: {
+  "current_state": "CHECK_RESPONSIVENESS",
+  "panic_level": 6,
+  "instruction": "Tap their shoulders and shout 'Are you okay?'.",
+  "needs_confirmation": false
+}
+
